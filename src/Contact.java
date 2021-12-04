@@ -24,4 +24,20 @@ public class Contact {
             ", group=" + group +
             '}';
   }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getSurname() {
+    return surname;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public Group getGroup() {
+    return group;
+  }
 }
