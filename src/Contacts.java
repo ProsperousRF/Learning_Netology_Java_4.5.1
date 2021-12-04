@@ -16,5 +16,15 @@ public class Contacts {
 
   }
 
+  // Удаление контакта по имени и фамилии.
+  public void removeContact(String name, String surname) {
+
+  }
+
+  // Поиск контакта по номеру
+  public Contact findContactByPhone(String phone) {
+    return null;
+  }
+
 
 }

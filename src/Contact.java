@@ -3,10 +3,10 @@
  */
 public class Contact {
 
-  private String name;
-  private String surname;
-  private String phone;
-  private Group group;
+  private final String name;
+  private final String surname;
+  private final String phone;
+  private final Group group;
 
   public Contact(String name, String surname, String phone, Group group) {
     this.name = name;
