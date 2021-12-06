@@ -35,5 +35,21 @@ public class ContactsController {
 
   private void menuHandler(String line) {
     // TODO: 12/5/2021 add menu handler except for exit
+    switch (line) {
+      case "1":
+        // TODO: 12/6/2021 Add contact
+        break;
+      case "2":
+        // TODO: 12/6/2021 Add missed call
+        break;
+      case "3":
+        // TODO: 12/6/2021 Printout all missed calls
+        break;
+      case "4":
+        // TODO: 12/6/2021 Clear all missed calls
+        break;
+      default:
+        System.out.println("Неверно выбран пункт меню");
+    }
   }
 }
