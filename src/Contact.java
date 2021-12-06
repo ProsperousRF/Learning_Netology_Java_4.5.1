@@ -3,14 +3,14 @@
  */
 public class Contact {
 
-  private final String name;
-  private final String surname;
+  private final String firstName;
+  private final String lastName;
   private final String phone;
   private final Group group;
 
-  public Contact(String name, String surname, String phone, Group group) {
-    this.name = name;
-    this.surname = surname;
+  public Contact(String firstName, String lastName, String phone, Group group) {
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.phone = phone;
     this.group = group;
   }
@@ -18,19 +18,19 @@ public class Contact {
   @Override
   public String toString() {
     return "Contact{" +
-            "name='" + name + '\'' +
-            ", surname='" + surname + '\'' +
+            "name='" + firstName + '\'' +
+            ", surname='" + lastName + '\'' +
             ", phone='" + phone + '\'' +
             ", group=" + group +
             '}';
   }
 
-  public String getName() {
-    return name;
+  public String getFirstName() {
+    return firstName;
   }
 
-  public String getSurname() {
-    return surname;
+  public String getLastName() {
+    return lastName;
   }
 
   public String getPhone() {
