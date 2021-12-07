@@ -1,15 +1,20 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
  * @author Stanislav Rakitov in 2021
  */
-public class ContactsController {
+public class Controller {
   private final Scanner scanner;
   private final Contacts contacts;
+  private final MissedCalls missedCalls;
 
-  public ContactsController(Scanner scanner) {
+  public Controller(Scanner scanner) {
     this.scanner = scanner;
     contacts = new Contacts();
+    missedCalls = new MissedCalls();
   }
 
   private void printMenu() {
@@ -36,26 +41,48 @@ public class ContactsController {
   }
 
   private void menuHandler(String line) {
-    // TODO: 12/5/2021 add menu handler except for exit
     switch (line) {
       case "1":
-        addContact();
+        addContactHandler();
         break;
       case "2":
-        // TODO: 12/6/2021 Add missed call
+        addMissedCallHandler();
         break;
       case "3":
-        // TODO: 12/6/2021 Printout all missed calls
+        printAllMissedCalls();
         break;
       case "4":
-        // TODO: 12/6/2021 Clear all missed calls
+        missedCalls.clearAllCalls();
         break;
       default:
         System.out.println("Неверно выбран пункт меню");
     }
   }
 
-  private void addContact() {
+  private void printAllMissedCalls() {
+    for (Map.Entry<LocalDateTime, String> aCall : missedCalls.getEntries()) {
+
+      DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm:ss yyyy-MM-dd");
+      String formattedDateTime = aCall.getKey().format(format);
+
+      Contact phone = contacts.findContactByPhone(aCall.getValue());
+      String contactFullName = String.format("%s %s", phone.getFirstName(), phone.getLastName());
+
+      System.out.println(formattedDateTime + " " + contactFullName);
+    }
+  }
+
+  private void addMissedCallHandler() {
+    System.out.println("Добавьте номер пропущенного вызова");
+    String line = scanner.nextLine();
+    if (line.isBlank()) {
+      System.out.println("Неверно введен номер");
+      return;
+    }
+    System.out.println(missedCalls.addMissedCall(line) ? "Добавлен" : "Перезаписан");
+  }
+
+  private void addContactHandler() {
     System.out.println("Для добавления контакта введите:\n" +
                                "Имя, Фамилию, номер телефона, группу " +
                                "контакта (Работа/Друзья/Семья)");
@@ -68,7 +95,12 @@ public class ContactsController {
       Group group;
       try {
         group = getGroup(split[3].trim());
-        contacts.addContact(firstName, lastName, phone, group);
+        boolean result = contacts.addContact(firstName, lastName, phone, group);
+        if (result) {
+          System.out.printf("Номер %s добавлен\n", phone);
+        } else {
+          System.out.println("Внимание, контакт с таким номером уже существовал ранее, и теперь он перезаписан!");
+        }
       } catch (IllegalGroupNameException e) {
         System.out.println(e.getMessage());
       }

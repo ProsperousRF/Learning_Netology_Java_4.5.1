@@ -8,8 +8,8 @@ public class Main {
 
 
     try (Scanner scanner = new Scanner(System.in)) {
-      ContactsController contactsController = new ContactsController(scanner);
-      contactsController.proceed();
+      Controller controller = new Controller(scanner);
+      controller.proceed();
     }
 
   }
