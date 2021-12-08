@@ -54,7 +54,8 @@ public class Controller {
       case "4":
         missedCalls.clearAllCalls();
         break;
-      case "6":
+      // Secret case for debug
+      case "debug":
         removeContact();
         break;
       default:
