@@ -66,7 +66,14 @@ public class Controller {
       String formattedDateTime = aCall.getKey().format(format);
 
       Contact phone = contacts.findContactByPhone(aCall.getValue());
-      String contactFullName = String.format("%s %s", phone.getFirstName(), phone.getLastName());
+
+      String contactFullName;
+      if (phone != null) {
+        contactFullName = String.format("%s %s", phone.getFirstName(), phone.getLastName());
+      } else {
+        contactFullName = aCall.getValue();
+      }
+
 
       System.out.println(formattedDateTime + " " + contactFullName);
     }
@@ -88,21 +95,25 @@ public class Controller {
                                "контакта (Работа/Друзья/Семья)");
     String line = scanner.nextLine();
     if (!line.isBlank()) {
-      String[] split = line.split(",");
-      String firstName = split[0].trim();
-      String lastName = split[1].trim();
-      String phone = split[2].trim();
-      Group group;
       try {
-        group = getGroup(split[3].trim());
-        boolean result = contacts.addContact(firstName, lastName, phone, group);
-        if (result) {
-          System.out.printf("Номер %s добавлен\n", phone);
-        } else {
-          System.out.println("Внимание, контакт с таким номером уже существовал ранее, и теперь он перезаписан!");
+        String[] split = line.split(",");
+        String firstName = split[0].trim();
+        String lastName = split[1].trim();
+        String phone = split[2].trim();
+        Group group;
+        try {
+          group = getGroup(split[3].trim());
+          boolean result = contacts.addContact(firstName, lastName, phone, group);
+          if (result) {
+            System.out.printf("Номер %s добавлен\n", phone);
+          } else {
+            System.out.println("Внимание, контакт с таким номером уже существовал ранее, и теперь он перезаписан!");
+          }
+        } catch (IllegalGroupNameException e) {
+          System.out.println(e.getMessage());
         }
-      } catch (IllegalGroupNameException e) {
-        System.out.println(e.getMessage());
+      } catch (ArrayIndexOutOfBoundsException e) {
+        System.out.println("Неправильный формат добавления контакта");
       }
 
     }

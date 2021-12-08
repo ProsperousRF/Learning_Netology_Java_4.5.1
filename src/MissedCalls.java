@@ -23,6 +23,6 @@ public class MissedCalls {
   }
 
   public void clearAllCalls() {
-    this.missedCalls = new TreeMap<>();
+    missedCalls.clear();
   }
 }
