@@ -54,6 +54,9 @@ public class Controller {
       case "4":
         missedCalls.clearAllCalls();
         break;
+      case "6":
+        removeContact();
+        break;
       default:
         System.out.println("Неверно выбран пункт меню");
     }
@@ -133,5 +136,20 @@ public class Controller {
     } else {
       throw new IllegalGroupNameException("Название группы не распознано");
     }
+  }
+
+  private void removeContact() {
+    System.out.println("Для удаления контакта введите его имя, фамилию");
+    String line = scanner.nextLine();
+    try {
+      String[] split = line.split(",");
+      String firstName = split[0].trim();
+      String lastName = split[1].trim();
+      boolean result = contacts.removeContact(firstName, lastName);
+      System.out.println("Контакт " + (result ? "удален" : "не удален"));
+    } catch (ArrayIndexOutOfBoundsException e) {
+      System.out.println("Неправильно введены данные");
+    }
+
   }
 }

@@ -20,20 +20,19 @@ public class Contacts {
   }
 
   // Удаление контакта по имени и фамилии.
-  @SuppressWarnings("unused")
-  public void removeContact(String name, String surname) {
+  public boolean removeContact(String name, String surname) {
     // Check for empty database
     if (contacts.isEmpty()) {
-      return;
+      return false;
     }
     for (Map.Entry<String, Contact> entry : contacts.entrySet()) {
       if (entry != null
               && Objects.equals(entry.getValue().getFirstName(), name)
               && Objects.equals(entry.getValue().getLastName(), surname)) {
-        //noinspection SuspiciousMethodCalls
-        contacts.remove(entry);
+        return contacts.remove(entry.getKey()) != null;
       }
     }
+    return false;
   }
 
   // Поиск контакта по номеру
