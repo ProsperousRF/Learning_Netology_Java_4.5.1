@@ -25,9 +25,9 @@ public class Contacts {
     if (contacts.isEmpty()) {
       return false;
     }
+
     for (Map.Entry<String, Contact> entry : contacts.entrySet()) {
-      if (entry != null
-              && Objects.equals(entry.getValue().getFirstName(), name)
+      if (Objects.equals(entry.getValue().getFirstName(), name)
               && Objects.equals(entry.getValue().getLastName(), surname)) {
         return contacts.remove(entry.getKey()) != null;
       }

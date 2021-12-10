@@ -64,20 +64,22 @@ public class Controller {
   }
 
   private void printAllMissedCalls() {
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss yyyy-MM-dd");
+    String contactFullName;
+    String formattedDateTime;
+
     for (Map.Entry<LocalDateTime, String> aCall : missedCalls.getEntries()) {
 
-      DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm:ss yyyy-MM-dd");
-      String formattedDateTime = aCall.getKey().format(format);
+      formattedDateTime = aCall.getKey().format(formatter);
 
       Contact phone = contacts.findContactByPhone(aCall.getValue());
 
-      String contactFullName;
       if (phone != null) {
         contactFullName = String.format("%s %s", phone.getFirstName(), phone.getLastName());
       } else {
         contactFullName = aCall.getValue();
       }
-
 
       System.out.println(formattedDateTime + " " + contactFullName);
     }
